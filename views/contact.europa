@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>#title#</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#link1#">Home</a></li>
+        <li><a href="#link2#">Next Page</a></li>
+        <li><a href="#link3#">Prev Page</a></li>
+        <li><a href="#link4#">Contact</a></li>
+      </ul>
+    </nav>
+  <main>
+    <div id="app">
+      <h1>#title#</h1>
+      <h4>#sub-title#</h4>
+      <form>#content#</form>
+    </div>
+  </main>
+  </body>
+</html>
