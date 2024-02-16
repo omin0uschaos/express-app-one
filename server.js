@@ -1,14 +1,16 @@
 const express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-const app = express();
+
 let PORT = 3000;
 const { userIdToColor: userColor } = require("./colors.js");
+const app = express();
 
 app.use(express.static("./styles"));
 app.use('/images', express.static('images'));
 app.use(cookieParser());
 app.use(session({secret: "Spacemen die alone..."}));
+app.use(express.urlencoded({ extended: true }));
 
 const fs = require("fs")
 
@@ -50,17 +52,29 @@ app.get('/', (req, res)=>{
     res.render("index", options);
 })
 
-app.get('/contact', (req, res)=>{
+app.get('/contact', (req, res) => {
     const options = {
-        homelink:"/",
-        contactlink:"/contact",
+        homelink: "/",
+        contactlink: "/contact",
         title: "This is the Contact Page",
         subTitle: "Welcome to the wonderful form of Europa",
-        content: `<label for="name">Name (4 to 20 characters):</label>
-                <input type="text" id="name" name="name" required minlength="4" maxlength="20" size="20" />`
+        content: `
+        <form action="/submit-form" method="POST">
+            <label for="name">Name (up to 20 characters):</label>
+            <input type="text" id="name" name="name" required minlength="1" maxlength="20" size="20" />
+            <input type="submit" value="Submit" />
+        </form>
+    
+        `
     };
     res.render("contact", options);
-})
+});
+app.post('/submit-form', (req, res) => {
+    const userId = req.body.name;
+    console.log("Form data received:", req.body);
+
+    res.send(`Success! Received submission for userId: ${userId}`);
+});
 app.get('/:userId/color', (req, res)=>{
     let useridvar = req.params.userId;
     let useridColor = userColor(useridvar);
